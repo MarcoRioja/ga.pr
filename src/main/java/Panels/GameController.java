@@ -538,8 +538,6 @@ public class GameController extends JPanel {
 			item = conDB.selectItem((byte) (itemR+1));
 		}
 		getItem(item);
-		
-		conDB.savePlayer(player, actStage);
 	}
 
 	public void brokeBox(Item nItem) {

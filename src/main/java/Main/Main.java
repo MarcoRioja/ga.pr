@@ -23,7 +23,13 @@ public class Main {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
+		
+		try {
+			uploadStage((byte) 5, "st_5");
+		} catch (SQLException | IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		GameFrame gameFrame = null;
 
 		if (args.length > 0) {
@@ -45,7 +51,7 @@ public class Main {
 		gameFrame.setLocationRelativeTo(null); // Centra el JFrame en la pantalla
 
 		gameFrame.pack();
-		gameFrame.setSize((30 * 32) + 14, (21 * 32) + 4);
+		gameFrame.setSize((30 * 32) + 14, (21 * 32) + 3);
 		gameFrame.setVisible(true);
 		
 	}

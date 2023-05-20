@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-
-import Features.AlertMessage;
 import Items.Item;
 import Items.Weapon;
 
