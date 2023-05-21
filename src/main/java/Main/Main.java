@@ -36,7 +36,7 @@ public class Main {
 			try {
 				PlayerE player = new PlayerE((byte) 10, (byte) 1, (short) 480, "Marco", (byte) 0, null, null);
 				gameFrame = new GameFrame(Byte.parseByte(args[0].substring(0, 1)), player, conDB);
-			} catch (SQLException e) {
+			} catch (SQLException | NumberFormatException e) {
 				e.printStackTrace();
 			}
 		} else {
@@ -49,7 +49,6 @@ public class Main {
 		}
 		
 		gameFrame.setLocationRelativeTo(null); // Centra el JFrame en la pantalla
-
 		gameFrame.pack();
 		gameFrame.setSize((30 * 32) + 14, (21 * 32) + 3);
 		gameFrame.setVisible(true);

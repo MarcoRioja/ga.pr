@@ -14,14 +14,9 @@ import javax.swing.SwingConstants;
 import DB.DB;
 import Entities.PlayerE;
 import Items.Weapon;
-import javax.swing.JTextPane;
-import java.awt.Color;
 import javax.swing.UIManager;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
 
+@SuppressWarnings("serial")
 public class WeaponFrame extends JFrame {
 	
 	DB conDB;

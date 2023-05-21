@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import DB.DB;
 import Entities.Enemy;
 
+@SuppressWarnings("serial")
 public class EntityPanel extends JPanel {
 
 	private DB conDB;
@@ -47,7 +48,6 @@ public class EntityPanel extends JPanel {
 			add(etiqueta);
 
 			if (selECell((short) i, nsId) == 7 || selECell((short) i, nsId) == 11 || selECell((short) i, nsId) == 14) {
-				short nId = (short) enemies.size();
 				enemies.add(new Enemy((short) i, (short) (enemies.size() + 1), selECell((short) i, nsId)));
 			}
 		}

@@ -1,6 +1,7 @@
 package Panels;
 
 import java.awt.HeadlessException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,6 +14,9 @@ import javax.swing.SwingUtilities;
 import DB.DB;
 import Entities.Enemy;
 import Entities.PlayerE;
+import Errors.InvalidItemIdException;
+import Errors.InvalidStageIdException;
+import Errors.InvalidWeaponIdException;
 import Features.SoundPlayer;
 import Frames.GameFrame;
 import Frames.ItemFrame;
@@ -66,7 +70,7 @@ public class GameController extends JPanel {
 	}
 
 	// ----- Moves -----//
-	public void movePlayer(char nDirection) throws SQLException {
+	public void movePlayer(char nDirection) throws SQLException, IOException {
 		refreshPanel();
 		player.setLastPos(player.getPos());
 
@@ -152,7 +156,14 @@ public class GameController extends JPanel {
 				} else if (player.getPos() % 30 == 29) {
 					entityPanel.replaceCell(player.getPos(), (byte) 0);
 					player.setPos((short) 480);
-					ChangeStage();
+					
+					try {
+						ChangeStage();
+					} catch(InvalidStageIdException e1) {
+						e1.printStackTrace();
+						ChangeStage((byte) 0);
+					}
+					
 				}
 
 				// Air //
@@ -470,18 +481,38 @@ public class GameController extends JPanel {
 	}
 
 	// ----- Change Stage -----//
-	public void ChangeStage() throws SQLException {
+	public void ChangeStage() throws SQLException, IOException {
 		Random r = new Random();
 		byte stageR = (byte) (r.nextInt(conDB.countStages()) + 1);
+		
+		if (conDB.selectTerrain(stageR) == null || conDB.selectEntities(stageR) == null) {
+			throw new InvalidStageIdException();
+		}
 		
 		GameFrame gameFrame = new GameFrame(stageR, player, conDB);
 		parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		parentFrame.dispose();
 		gameFrame.setVisible(true);
 	}
+	
+	public void ChangeStage(byte stageId) throws SQLException, IOException {
+		GameFrame gameFrame = new GameFrame(stageId, player, conDB);
+		parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		parentFrame.dispose();
+		gameFrame.setVisible(true);
+	}
 
 	// ----- Boxes -----//
-	public void getItem(Item nItem) {
+	public void getItem(Item nItem) throws SQLException {
+		
+		if (conDB.selectItem(playerActId) == null) {
+			throw new InvalidItemIdException();
+		} 
+		
+		if (conDB.selectWeapon(playerActId) == null) {
+			throw new InvalidWeaponIdException();
+		} 
+		
 		if (nItem instanceof Weapon) {
 			Weapon nWeapon = (Weapon) nItem;
 			new WeaponFrame(nItem.getName(), nItem.getImage(), nItem.getDesc(), nWeapon.getDamage(), player, conDB);
@@ -517,6 +548,7 @@ public class GameController extends JPanel {
 			//JOptionPane.showMessageDialog(null, "Has conseguido un objeto: " + nItem.getName(), "Inventario",JOptionPane.PLAIN_MESSAGE);
 		}
 	}
+	
 
 	public void brokeBox() throws SQLException {
 		Random r = new Random();
@@ -537,11 +569,22 @@ public class GameController extends JPanel {
 			itemR = (byte) r.nextInt(conDB.countItems());
 			item = conDB.selectItem((byte) (itemR+1));
 		}
-		getItem(item);
+		try {
+			getItem(item);
+		} catch (InvalidItemIdException | InvalidWeaponIdException e) {
+			e.printStackTrace();
+			brokeBox((byte) 0);
+		}
 	}
 
-	public void brokeBox(Item nItem) {
+	public void brokeBox(Item nItem) throws SQLException {
 		getItem(nItem);
+	}
+	
+	public void brokeBox(byte itemId) throws SQLException {
+		Item item = conDB.selectWeapon((byte) itemId);
+		
+		getItem(item);
 	}
 
 	// ----- Checking -----//
@@ -678,7 +721,7 @@ public class GameController extends JPanel {
 	}
 
 	// ----- Actions -----//
-	public void typeKey(char nKey) throws SQLException {
+	public void typeKey(char nKey) throws SQLException, IOException {
 		if (nKey == 'w' || nKey == 'a' || nKey == 's' || nKey == 'd' || nKey == ' ') {
 			movePlayer(nKey);
 		} else if (nKey == 'e') {

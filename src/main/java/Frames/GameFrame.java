@@ -2,6 +2,7 @@ package Frames;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class GameFrame extends JFrame {
 
 					try {
 						gamePanel.getGameController().typeKey(e.getKeyChar());
-					} catch (SQLException e1) {
+					} catch (SQLException | IOException e1) {
 						e1.printStackTrace();
 					}
 

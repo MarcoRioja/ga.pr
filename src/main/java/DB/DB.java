@@ -1,17 +1,21 @@
 package DB;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
 import Entities.PlayerE;
-import Errors.LongName;
 import Items.Item;
 import Items.Weapon;
 
@@ -24,11 +28,15 @@ public class DB {
 	String db = "ga_data";
 	String user = "root";
 	String password = "";
+	private Date actualDate;
+	private SimpleDateFormat dateFormat;
+	private String dateFormated;
 
 	/**
 	 * Only Construct the DB Object
 	 * 
 	 * @throws SQLException
+	 * @throws IOException 
 	 */
 	public DB() throws SQLException {
 		connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + db, user, password);
@@ -189,11 +197,11 @@ public class DB {
 	}
 	*/
 	
-	public void createPlayer(PlayerE player, byte stage) throws SQLException {
+	public void createPlayer(PlayerE player, byte stage) throws SQLException, IOException {
 	    createPlayerRecursive(player, stage);
 	}
 	
-	private void createPlayerRecursive(PlayerE player, byte stage) throws SQLException {
+	private void createPlayerRecursive(PlayerE player, byte stage) throws SQLException, IOException {
 	    String pNameQuery = "SELECT name FROM saves WHERE name = ?";
 	    PreparedStatement statement = connection.prepareStatement(pNameQuery);
 	    statement.setString(1, player.getName());
@@ -209,7 +217,6 @@ public class DB {
 	            createPlayerRecursive(player, stage);
 	        }
 	    	createPlayerRecursive(player, stage);
-	        throw new LongName();
 	    } else
 	    if (resultSet.next()) {
 	    	JOptionPane.showMessageDialog(null, "Name in Use");
@@ -231,6 +238,16 @@ public class DB {
 	        insertStatement.setString(6, invToString(player.getIventory()));
 	        insertStatement.setByte(7, stage);
 	        insertStatement.executeUpdate();
+	        
+	        actualDate = new Date();
+	        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	        dateFormated = dateFormat.format(actualDate);
+
+	        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("resources/logFile.txt", true))) {
+	            bufferedWriter.write("\n- " + dateFormated + "> User Created: " + player.getName());
+	        } catch (IOException e) {
+	        	System.out.println("An error occurred while writing to the file: " + e.getMessage());
+	        }
 	    }
 	}
 	
@@ -238,12 +255,26 @@ public class DB {
 		String query = "UPDATE saves SET lifes = '" + player.getLifes() + "', coins = '" + player.getCoins() + "', baseAtk = '" 
 				+ player.getBaseAtk() + "', weapon = '" + getWeaponId(player.getWeapon()) + "', inventory = '" + invToString(player.getIventory()) + "', stage = '" + stage +"' WHERE name = '" + player.getName() + "'";
 		insert(query);
+		
+		actualDate = new Date();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        dateFormated = dateFormat.format(actualDate);
+
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("resources/logFile.txt", true))) {
+            bufferedWriter.write("\n- " + dateFormated + "> Saved - User: " + player.getName());
+        } catch (IOException e) {
+        	System.out.println("An error occurred while writing to the file: " + e.getMessage());
+        }
 	}
 	
-	public PlayerE loadPlayer(String playerName) throws SQLException {
+	public PlayerE loadPlayer(String playerName) throws SQLException, IOException {
 		String playerQuery = "SELECT name,lifes,coins,baseAtk,weapon,inventory FROM saves WHERE name = '" + playerName + "'";
 		PreparedStatement statement = connection.prepareStatement(playerQuery);
 		ResultSet rs = statement.executeQuery(playerQuery);
+		
+		actualDate = new Date();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        dateFormated = dateFormat.format(actualDate);
 
 		while (rs.next()) {
 			String name = rs.getString("name");
@@ -252,10 +283,20 @@ public class DB {
 			byte baseAtk = rs.getByte("baseAtk");
 			Weapon weapon = selectWeapon((byte) rs.getInt("weapon"));
 			ArrayList<Item> inventory = stringToInv(rs.getString("inventory"));
-			return new PlayerE(lifes,baseAtk,(short) 480,name,coins,weapon,inventory);
+			
+			PlayerE newPlayer = new PlayerE(lifes,baseAtk,(short) 480,name,coins,weapon,inventory);
+			
+			try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("resources/logFile.txt", true))) {
+	            bufferedWriter.write("\n- " + dateFormated + "> User Loaded: " + newPlayer.getName());
+	        } catch (IOException e) {
+	            System.out.println("An error occurred while writing to the file: " + e.getMessage());
+	        }
+			
+			return newPlayer;
 		}
 		PlayerE newPlayer = new PlayerE((byte) 10, (byte) 1, (short) 480, playerName, (byte) 0, null, null);
 		createPlayer(newPlayer,(byte) 1);
+		
 		return newPlayer;
 	}
 	

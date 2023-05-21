@@ -1,7 +1,5 @@
 package Entities;
 
-import Items.Item;
-
 public class Enemy extends Entity {
 
 	short eId;
@@ -25,19 +23,19 @@ public class Enemy extends Entity {
 			setLifes((byte) 2);
 			setBaseAtk((byte) 1);
 			setReward((byte) 2);
-			seteType(eType.ZOMBIE);
+			seteType(type.ZOMBIE);
 			break;
 		case 11:
 			setLifes((byte) 3);
 			setBaseAtk((byte) 2);
 			setReward((byte) 3);
-			seteType(eType.SKELETON);
+			seteType(type.SKELETON);
 			break;
 		case 14:
 			setLifes((byte) 10);
 			setBaseAtk((byte) 5);
 			setReward((byte) 4);
-			seteType(eType.DOG);
+			seteType(type.DOG);
 			break;
 		default:
 			break;

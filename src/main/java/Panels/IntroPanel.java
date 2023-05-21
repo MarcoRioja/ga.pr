@@ -11,6 +11,7 @@ import Frames.GameFrame;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -55,15 +56,14 @@ public class IntroPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				soundPlayer.playSound("resources/audio/click.wav");
 				PlayerE player = new PlayerE((byte) 10, (byte) 1, (short) 480, JOptionPane.showInputDialog(null, "Player Name:"), (byte) 0, null, null);
-				try {
 					Random r = new Random();
 					byte stageR = (byte) (r.nextInt(2) + 1);
-					conDB.createPlayer(player,stageR);
-					ChangeStage(player,stageR);
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
-				//System.out.println("¡Nuevo Juego!");
+					try {
+						conDB.createPlayer(player,stageR);
+						ChangeStage(player,stageR);
+					} catch (SQLException | IOException e1) {
+						e1.printStackTrace();
+					}
 			}
 		});
 		newGLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -78,12 +78,12 @@ public class IntroPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				//System.out.println("¡Continuar!");
 				soundPlayer.playSound("resources/audio/click.wav");
-				try {
 					String pName = JOptionPane.showInputDialog(null, "Nombre del Jugador:");
-					ChangeStage(conDB.loadPlayer(pName),conDB.requestStage(pName));
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
+					try {
+						ChangeStage(conDB.loadPlayer(pName),conDB.requestStage(pName));
+					} catch (SQLException | IOException e1) {
+						e1.printStackTrace();
+					}
 			}
 		});
 		contLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -103,15 +103,6 @@ public class IntroPanel extends JPanel {
 		quitLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(Box.createRigidArea(new Dimension(0, 20)));
 		add(quitLbl);
-	}
-	
-	public void ChangeStage(PlayerE player) throws SQLException {
-		Random r = new Random();
-		byte stageR = (byte) (r.nextInt(conDB.countStages()) + 1);
-		GameFrame gameFrame = new GameFrame(stageR,player, conDB);
-		parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-		parentFrame.dispose();
-		gameFrame.setVisible(true);
 	}
 	
 	public void ChangeStage(PlayerE player, byte stageId) throws SQLException {

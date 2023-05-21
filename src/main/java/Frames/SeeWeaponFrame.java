@@ -16,6 +16,7 @@ import DB.DB;
 import Entities.PlayerE;
 import Items.Weapon;
 
+@SuppressWarnings("serial")
 public class SeeWeaponFrame extends JFrame {
 	DB conDB;
 
