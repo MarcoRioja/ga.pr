@@ -301,9 +301,9 @@ public class GameController extends JPanel {
 			heal((byte) 1);
 			removeCoins((byte) 20);
 		} else if (player.getCoins() < 20) {
-			JOptionPane.showMessageDialog(null, "(Requiere 20 Rupias)", "Curación", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "(Requiere 20 Rupias)", "Curación", JOptionPane.ERROR_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Tienes la vida completa", "Curación", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Tienes la vida completa", "Curación", JOptionPane.ERROR_MESSAGE);
 		}
 
 		refreshPanel();
