@@ -24,11 +24,13 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
+		/*
 		try {
 			uploadStage((byte) 5, "st_5");
 		} catch (SQLException | IOException e1) {
 			e1.printStackTrace();
 		}
+		*/
 		
 		GameFrame gameFrame = null;
 

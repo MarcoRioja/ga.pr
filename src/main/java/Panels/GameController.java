@@ -310,7 +310,7 @@ public class GameController extends JPanel {
 	}
 
 	public void upgradeWeapon() throws SQLException {
-		if (player.getCoins() >= 15 && player.findItem("Piedra")) {
+		if (player.getCoins() >= 15 && player.findItem("Sharped Stone")) {
 			player.getWeapon().upgradeWeapon();
 			player.removeCoins((byte) 15);
 			player.deleteItem("Piedra");
@@ -319,7 +319,7 @@ public class GameController extends JPanel {
 					"Arma afilada, Daño +1 \n\nDaño: " + player.getWeapon().getDamage(), "Afilar",
 					JOptionPane.PLAIN_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "(Requiere 15 Rupias y 1 Piedra)", "Afilar",
+			JOptionPane.showMessageDialog(null, "(Require 15 Rupees and 1 Sharped Stone)", "Afilar",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		

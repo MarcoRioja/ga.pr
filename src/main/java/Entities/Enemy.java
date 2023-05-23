@@ -34,7 +34,7 @@ public class Enemy extends Entity {
 		case 14:
 			setLifes((byte) 10);
 			setBaseAtk((byte) 5);
-			setReward((byte) 4);
+			setReward((byte) 7);
 			seteType(type.DOG);
 			break;
 		default:
