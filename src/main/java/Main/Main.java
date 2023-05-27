@@ -24,13 +24,14 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
-		/*
+		//Haz que esto en vez de tener que comentarlos , solo se active si están los argumentos -uploadStage id nombre 
+		//para jugarlos -playStage
 		try {
 			uploadStage((byte) 5, "st_5");
 		} catch (SQLException | IOException e1) {
 			e1.printStackTrace();
 		}
-		*/
+
 		
 		GameFrame gameFrame = null;
 

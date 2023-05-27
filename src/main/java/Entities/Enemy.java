@@ -10,7 +10,8 @@ public class Enemy extends Entity {
 	public enum type {
         ZOMBIE,
         SKELETON,
-        DOG
+        DOG,
+        RHINO
     }
 
 	public Enemy(short nPos, short nEId, byte nIId) {
@@ -36,6 +37,12 @@ public class Enemy extends Entity {
 			setBaseAtk((byte) 5);
 			setReward((byte) 7);
 			seteType(type.DOG);
+			break;
+		case 16:
+			setLifes((byte) 10);
+			setBaseAtk((byte) 2);
+			setReward((byte) 6);
+			seteType(type.RHINO);
 			break;
 		default:
 			break;

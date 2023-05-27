@@ -47,7 +47,7 @@ public class EntityPanel extends JPanel {
 			JLabel etiqueta = new JLabel(new ImageIcon("resources/imgs/characters/" + selECell((short) i, nsId) + ".png"));
 			add(etiqueta);
 
-			if (selECell((short) i, nsId) == 7 || selECell((short) i, nsId) == 11 || selECell((short) i, nsId) == 14) {
+			if (selECell((short) i, nsId) == 7 || selECell((short) i, nsId) == 11 || selECell((short) i, nsId) == 14 || selECell((short) i, nsId) == 16) {
 				enemies.add(new Enemy((short) i, (short) (enemies.size() + 1), selECell((short) i, nsId)));
 			}
 		}

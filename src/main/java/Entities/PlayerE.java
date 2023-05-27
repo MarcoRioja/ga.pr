@@ -210,7 +210,7 @@ public class PlayerE extends Entity {
 	 * Collect a coin
 	 */
 	public void collCoin() {
-		setCoins((byte) 99);
+		setCoins((byte) (getCoins() + 1));
 	}
 	
 	public void collCoin(byte nCoins) {
