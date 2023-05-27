@@ -1,8 +1,2 @@
 
-- 23/05/2023 12:10:15> User Loaded: Marco
-- 23/05/2023 12:11:41> User Loaded: Marco
-- 23/05/2023 12:13:53> User Loaded: Marco
-- 23/05/2023 12:15:21> User Loaded: Marco
-- 23/05/2023 12:26:50> User Created: Default
-- 23/05/2023 12:27:06> User Created: Miguel
-- 23/05/2023 12:36:16> User Loaded: Marco
+
