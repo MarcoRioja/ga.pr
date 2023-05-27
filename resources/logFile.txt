@@ -1,7 +1,12 @@
 
+<<<<<<< Updated upstream
 - 23/05/2023 11:24:07> User Created: Marco
 <<<<<<< Updated upstream
 - 23/05/2023 11:33:37> User Loaded: Marco
 =======
 - 23/05/2023 11:49:36> User Loaded: Marco
+>>>>>>> Stashed changes
+=======
+- 22/05/2023 18:18:20> User Created: Marco
+- 22/05/2023 18:21:35> User Loaded: Marco
 >>>>>>> Stashed changes
