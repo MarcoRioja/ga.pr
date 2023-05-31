@@ -19,6 +19,7 @@ import Errors.InvalidStageIdException;
 import Errors.InvalidWeaponIdException;
 import Features.SoundPlayer;
 import Frames.GameFrame;
+import Frames.InventoryFrame;
 import Frames.ItemFrame;
 import Frames.SeeWeaponFrame;
 import Frames.WeaponFrame;
@@ -38,7 +39,7 @@ public class GameController extends JPanel {
 	private boolean playerVolted;
 	private short attackPos;
 	private boolean attacking = false;
-
+	
 	// ----- Panels -----//
 	private EntityPanel entityPanel;
 	private TerrainPanel terrainPanel;
@@ -327,16 +328,10 @@ public class GameController extends JPanel {
 	}
 	
 	public void seeInventory() throws SQLException {
-		String inv = "";
 		if (player.getIventory().size() > 0) {
-			for (int i = 0; i < player.getIventory().size(); i++) {
-				inv += "- " + player.getIventory().get(i).getName() + "\n";
-			}
-			JOptionPane.showMessageDialog(null, inv, "Inventario de " + player.getName(),
-					JOptionPane.PLAIN_MESSAGE);
+			new InventoryFrame(player.getIventory()).setVisible(true);;
 		} else {
-			JOptionPane.showMessageDialog(null, "Más vacío que mi cerebro", "Inventario",
-					JOptionPane.PLAIN_MESSAGE);
+			new InventoryFrame(player.getIventory()).setVisible(true);;
 		}
 
 		refreshPanel();

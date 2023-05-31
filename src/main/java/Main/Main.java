@@ -23,22 +23,34 @@ public class Main {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		//Haz que esto en vez de tener que comentarlos , solo se active si están los argumentos -uploadStage id nombre 
-		//para jugarlos -playStage
-		try {
-			uploadStage((byte) 5, "st_5");
-		} catch (SQLException | IOException e1) {
-			e1.printStackTrace();
-		}
 
-		
-		GameFrame gameFrame = null;
+		boolean playStage = false;
+		byte stage = 0;
 
 		if (args.length > 0) {
+			if (args[0].equals("-playStage")) {
+				if (args.length == 2) {
+					playStage = true;
+					stage = Byte.parseByte(args[1].substring(0, 1));
+				}
+			} else if (args[0].equals("-uploadStage")) {
+				if (args.length == 3) {
+					try {
+						uploadStage(Byte.parseByte(args[1].substring(0, 1)), args[2]);
+					} catch (SQLException | IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		}
+
+		GameFrame gameFrame = null;
+
+		if (playStage) {
 			try {
 				PlayerE player = new PlayerE((byte) 10, (byte) 1, (short) 480, "Marco", (byte) 0, null, null);
-				gameFrame = new GameFrame(Byte.parseByte(args[0].substring(0, 1)), player, conDB);
+				gameFrame = new GameFrame(stage, player, conDB);
 			} catch (SQLException | NumberFormatException e) {
 				e.printStackTrace();
 			}
@@ -50,12 +62,12 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-		
+
 		gameFrame.setLocationRelativeTo(null); // Centra el JFrame en la pantalla
 		gameFrame.pack();
 		gameFrame.setSize((30 * 32) + 14, (21 * 32) + 3);
 		gameFrame.setVisible(true);
-		
+
 	}
 
 	public static void uploadStage(byte nStageId, String stageName) throws SQLException, IOException {

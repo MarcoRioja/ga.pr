@@ -16,7 +16,7 @@ public class Item {
 		setImageLink(nImageLink);
 		setProbability(nProbability);
 	}
-
+	
 	public Item(String nName, String nDesc, ImageIcon nImage) {
 		setName(nName);
 		setDesc(nDesc);
