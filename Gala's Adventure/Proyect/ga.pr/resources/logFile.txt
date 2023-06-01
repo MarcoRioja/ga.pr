@@ -24,3 +24,7 @@
 - 31/05/2023 11:15:21> User Loaded: Marco
 - 31/05/2023 11:16:08> User Created: Marc
 - 31/05/2023 11:16:15> User Loaded: Marco
+- 01/06/2023 20:53:08> User Loaded: Marco
+- 01/06/2023 21:00:30> Saved - User: Marco
+- 01/06/2023 21:00:39> User Loaded: Marco
+- 01/06/2023 21:06:05> User Loaded: Marco

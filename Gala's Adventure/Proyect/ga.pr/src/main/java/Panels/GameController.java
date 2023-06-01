@@ -550,9 +550,9 @@ public class GameController extends JPanel {
 		byte rNumber = (byte) r.nextInt(100);
 		byte type;
         if (rNumber < 10) {
-        	type = 0; // 10% de probabilidad de obtener 0
+        	type = 0; // 10% de probabilidad de obtener Arma
         } else {
-        	type = 1; // 90% de probabilidad de obtener 1
+        	type = 1; // 90% de probabilidad de obtener Objeto
         }
 		byte itemR;
 		Item item;

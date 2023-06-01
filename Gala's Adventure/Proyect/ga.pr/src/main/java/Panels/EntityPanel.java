@@ -29,6 +29,8 @@ public class EntityPanel extends JPanel {
 			22, // Save Stone
 			14, // Dog
 			15, // Dog Rev
+			16, // Rhino
+			17, // Rhino Rev
 			5, //Atack
 			6 //Atack Rev
 	};
