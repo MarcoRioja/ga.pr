@@ -39,7 +39,7 @@ public class DB {
 	 * @throws IOException 
 	 */
 	public DB() throws SQLException {
-		connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + db, user, password);
+		connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:13306/" + db, user, password);
 		System.out.println("Connected to database " + db + " | User: " + user + " | Password: " + password);
 	}
 

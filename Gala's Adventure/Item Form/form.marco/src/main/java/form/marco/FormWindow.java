@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class FormWindow extends JFrame {
     private JTextField txtName;
     private JButton btnSearch;
@@ -41,7 +41,7 @@ public class FormWindow extends JFrame {
     }
 
     private void connectToDatabase() {
-    	String url = "jdbc:mysql://localhost:3306/ga_data";
+    	String url = "jdbc:mysql://127.0.0.1:13306/ga_data";
         String user = "root";
         String password = "";
 
